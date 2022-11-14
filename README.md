@@ -39,4 +39,17 @@ Add to main.config:
 Once the extension is installed, simply use it in your code by  :
 
 ```php
-<?= \vanitokurason\orderlist\AutoloadExample::widget(); ?>```
+<?= \vanitokurason\orderlist\AutoloadExample::widget(); ?>
+```
+
+
+To enable caching add at config db.php:
+
+```php
+return [
+    'enableSchemaCache' => true,
+    'schemaCacheDuration' => 120,
+    'schemaCache' => 'cache',
+];
+```
+
