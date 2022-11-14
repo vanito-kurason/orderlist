@@ -16,7 +16,7 @@ php composer.phar require --prefer-dist vanito-kurason/yii2-orderlist "*"
 or add
 
 ```
-"vanito-kurason/yii2-orderlist": "*"
+"vanito-kurason/yii2-orderlist": "dev-master"
 ```
 
 to the require section of your `composer.json` file.
