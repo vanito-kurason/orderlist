@@ -25,6 +25,14 @@ to the require section of your `composer.json` file.
 Usage
 -----
 
+Add to main.config:
+
+'modules' => [
+    'orderlist' => [
+        'class' =>’vanitokurason\orderlist\Orderlist'
+    ]
+]
+
 Once the extension is installed, simply use it in your code by  :
 
 ```php
