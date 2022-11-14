@@ -32,7 +32,9 @@ Add to main.config:
     'orderlist' => [
         'class' =>’vanitokurason\orderlist\Orderlist'
     ]
-] ```
+]
+```
+
 
 Once the extension is installed, simply use it in your code by  :
 
