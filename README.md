@@ -10,13 +10,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist vanito-kurason/yii2-orderlist "*"
+php composer.phar require --prefer-dist vanito-kurason/orderlist "*"
 ```
 
 or add
 
 ```
-"vanito-kurason/yii2-orderlist": "dev-master"
+"vanito-kurason/orderlist": "dev-master"
 ```
 
 to the require section of your `composer.json` file.
