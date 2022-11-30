@@ -1,5 +1,5 @@
 {
-    "name": "vanito-kurason/yii2-orderlist",
+    "name": "vanito-kurason/orderlist",
     "description": "Module for orders listing",
     "type": "yii2-extension",
     "keywords": ["yii2","extension"],
