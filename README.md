@@ -1,4 +1,4 @@
-Yii2 module
+Yii2 module ver. 0.2
 ===========
 Module for orders listing
 
