@@ -12,7 +12,7 @@ class OrderController extends Controller
     {
         $searchModel = new OrderSearch();
         $dataProvider = $searchModel->search($this->request->get());
-        return $this->render('index', [
+        return $this->render('order', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
