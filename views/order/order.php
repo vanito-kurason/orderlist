@@ -122,7 +122,7 @@ use vanitokurason\orderlist\models\Order;
                 <td><?= $item['quantity'] ?></td>
                 <td><?= $item->getServiceName() ?></td>
                 <td><?= OrderStatus::NAMING[$item['status']] ?></td>
-                <td><?= $item['mode'] ?></td>
+                <td><?= Order::MOD_LIST[$item['mode']] ?></td>
                 <td><?= $item['created_at'] ?></td>
             </tr>
         <?php endforeach; ?>
