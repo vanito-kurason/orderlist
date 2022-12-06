@@ -39,6 +39,7 @@ class OrderSearch extends Order
 
         $query->andFilterWhere([
             'status' => $params['status'] ?? null,
+            'mode' => $params['mode'] ?? null
         ]);
 
         $query = $this->setSearchType($query, $params);
@@ -55,21 +56,13 @@ class OrderSearch extends Order
             ]
         ]);
 
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
-
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'service_id' => $this->service_id,
-            'serviceName' => $this->serviceName,
-            'status' => $params['status'] ?? null,
-            'mode' => $this->mode,
-        ]);
+//        $this->load($params);
+//
+//        if (!$this->validate()) {
+//            // uncomment the following line if you do not want to return any records when validation fails
+//            // $query->where('0=1');
+//            return $dataProvider;
+//        }
 
         return $dataProvider;
     }

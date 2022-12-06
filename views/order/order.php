@@ -2,7 +2,8 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use Yii;
-
+use vanitokurason\orderlist\models\OrderStatus;
+use vanitokurason\orderlist\models\Order;
 ?>
 
 <!DOCTYPE html>
@@ -49,11 +50,9 @@ use Yii;
 <div class="container-fluid">
     <ul class="nav nav-tabs p-b">
         <li class="<?= Yii::$app->getRequest()->getQueryParam('status') !== null ? '' : 'active' ?>"><a href="<?= Url::to('/orderlist') ?>">All orders</a></li>
-        <li class="<?= Yii::$app->getRequest()->getQueryParam('status') === '0' ? 'active' : '' ?>"><a href="<?= Url::to('/orderlist/?status=0') ?>">Pending</a></li>
-        <li class="<?= Yii::$app->getRequest()->getQueryParam('status') == 1 ? 'active' : '' ?>"><a href="<?= Url::to('/orderlist/?status=1') ?>">In progress</a></li>
-        <li class="<?= Yii::$app->getRequest()->getQueryParam('status') == 2 ? 'active' : '' ?>"><a href="<?= Url::to('/orderlist/?status=2') ?>">Completed</a></li>
-        <li class="<?= Yii::$app->getRequest()->getQueryParam('status') == 3 ? 'active' : '' ?>"><a href="<?= Url::to('/orderlist/?status=3') ?>">Canceled</a></li>
-        <li class="<?= Yii::$app->getRequest()->getQueryParam('status') == 4 ? 'active' : '' ?>"><a href="<?= Url::to('/orderlist/?status=4') ?>">Error</a></li>
+        <?php foreach (OrderStatus::NAMING as $key => $status_name): ?>
+            <li class="<?= Yii::$app->getRequest()->getQueryParam('status') === "$key" ? 'active' : '' ?>"><a href="<?= Url::to("/orderlist/?status=$key") ?>"><?= $status_name ?></a></li>
+        <?php endforeach; ?>
         <li class="pull-right custom-search">
             <form class="form-inline" action="/admin/orders" method="get">
                 <div class="input-group">
@@ -104,9 +103,10 @@ use Yii;
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li class="active"><a href="">All</a></li>
-                        <li><a href="">Manual</a></li>
-                        <li><a href="">Auto</a></li>
+                        <li class="<?= Yii::$app->getRequest()->getQueryParam('mode') !== null ? '' : 'active' ?>"><a href="<?= Url::to(['/orderlist', 'mode' => null, 'status' => $status]) ?>">All</a></li>
+                        <?php foreach (Order::MOD_LIST as $key => $mod): ?>
+                            <li class="<?= Yii::$app->getRequest()->getQueryParam('mode') === "$key" ? 'active' : '' ?>"><a href="<?= Url::to(['/orderlist', 'mode' => $key, 'status' => $status]) ?>"><?= $mod ?></a></li>
+                        <?php endforeach; ?>
                     </ul>
                 </div>
             </th>
@@ -117,11 +117,11 @@ use Yii;
         <?php foreach ($dataProvider->getModels() as $item): ?>
             <tr>
                 <td><?= $item['id'] ?></td>
-                <td><?= $item['user_id'] ?></td>
+                <td><?= $item->getUserName() ?></td>
                 <td class="link"><?= $item['link'] ?></td>
                 <td><?= $item['quantity'] ?></td>
-                <td><?= $item['service_id'] ?></td>
-                <td><?= $item['status'] ?></td>
+                <td><?= $item->getServiceName() ?></td>
+                <td><?= OrderStatus::NAMING[$item['status']] ?></td>
                 <td><?= $item['mode'] ?></td>
                 <td><?= $item['created_at'] ?></td>
             </tr>

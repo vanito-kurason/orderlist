@@ -20,17 +20,12 @@ use vanitokurason\orderlist\models\User;
  */
 class Order extends \yii\db\ActiveRecord
 {
-    public static $statusList = [
-        0 => 'Pending',
-        1 => 'In progress',
-        2 => 'Completed',
-        3 => 'Canceled',
-        4 => 'Fail'
-    ];
+    private const MOD_MANUAL = 0;
+    private const MOD_AUTO = 1;
 
-    public static $modeList = [
-        0 => 'Manual',
-        1 => 'Auto'
+    public const MOD_LIST = [
+        self::MOD_MANUAL => 'Manual',
+        self::MOD_AUTO => 'Auto'
     ];
 
     public static function tableName()
@@ -83,17 +78,5 @@ class Order extends \yii\db\ActiveRecord
     {
         $model = $this->service;
         return $model?$model->name:'';
-    }
-
-    public function getStatusName()
-    {
-        $model = $this->status;
-        return  self::$statusList[$model];
-    }
-
-    public function getModeName()
-    {
-        $model = $this->mode;
-        return self::$modeList[$model];
     }
 }
