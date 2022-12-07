@@ -14,10 +14,12 @@ class OrderController extends Controller
 
         $searchModel = new OrderSearch();
         $dataProvider = $searchModel->search($this->request->get());
+        $pages = $dataProvider->pagination;
         return $this->render('order', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'status' => $status
+            'status' => $status,
+            'pages' => $pages
         ]);
     }
 }

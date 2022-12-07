@@ -2,8 +2,10 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use Yii;
+use yii\widgets\LinkPager;
 use vanitokurason\orderlist\models\OrderStatus;
 use vanitokurason\orderlist\models\Order;
+use yii\grid\GridView;
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +56,7 @@ use vanitokurason\orderlist\models\Order;
             <li class="<?= Yii::$app->getRequest()->getQueryParam('status') === "$key" ? 'active' : '' ?>"><a href="<?= Url::to("/orderlist/?status=$key") ?>"><?= $status_name ?></a></li>
         <?php endforeach; ?>
         <li class="pull-right custom-search">
-            <form class="form-inline" action="/admin/orders" method="get">
+            <form class="form-inline" action="/orderlist" method="get">
                 <div class="input-group">
                     <input type="text" name="search" class="form-control" value="" placeholder="Search orders">
                     <span class="input-group-btn search-select-wrap">
@@ -84,7 +86,7 @@ use vanitokurason\orderlist\models\Order;
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li class="active"><a href="">All (894931)</a></li>
+                        <li class="active"><a href="">All (<?= $dataProvider->getTotalCount() ?>)</a></li>
                         <li><a href=""><span class="label-id">214</span>  Real Views</a></li>
                         <li><a href=""><span class="label-id">215</span> Page Likes</a></li>
                         <li><a href=""><span class="label-id">10</span> Page Likes</a></li>
@@ -123,7 +125,7 @@ use vanitokurason\orderlist\models\Order;
                 <td><?= $item->getServiceName() ?></td>
                 <td><?= OrderStatus::NAMING[$item['status']] ?></td>
                 <td><?= Order::MOD_LIST[$item['mode']] ?></td>
-                <td><?= $item['created_at'] ?></td>
+                <td><?= date('Y-m-d H:i:s', $item['created_at']) ?></td>
             </tr>
         <?php endforeach; ?>
         <!--    <tr>-->
@@ -142,27 +144,18 @@ use vanitokurason\orderlist\models\Order;
     </table>
     <div class="row">
         <div class="col-sm-8">
-
-            <nav>
-                <ul class="pagination">
-                    <li class="disabled"><a href="" aria-label="Previous">&laquo;</a></li>
-                    <li class="active"><a href="">1</a></li>
-                    <li><a href="">2</a></li>
-                    <li><a href="">3</a></li>
-                    <li><a href="">4</a></li>
-                    <li><a href="">5</a></li>
-                    <li><a href="">6</a></li>
-                    <li><a href="">7</a></li>
-                    <li><a href="">8</a></li>
-                    <li><a href="">9</a></li>
-                    <li><a href="">10</a></li>
-                    <li><a href="" aria-label="Next">&raquo;</a></li>
-                </ul>
-            </nav>
-
+            <?=
+            LinkPager::widget([
+                'pagination' => $dataProvider->pagination,
+            ]);
+            ?>
         </div>
         <div class="col-sm-4 pagination-counters">
-            1 to 100 of 3263
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                'layout' => '{summary}',
+                'summary' => "Showing {begin} - {end} of {totalCount} orders"
+            ]); ?>
         </div>
     </div>
 </div>

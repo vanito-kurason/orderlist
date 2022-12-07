@@ -39,7 +39,8 @@ class OrderSearch extends Order
 
         $query->andFilterWhere([
             'status' => $params['status'] ?? null,
-            'mode' => $params['mode'] ?? null
+            'mode' => $params['mode'] ?? null,
+            'service_id' => $params['service'] ?? null
         ]);
 
         $query = $this->setSearchType($query, $params);
