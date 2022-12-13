@@ -47,14 +47,14 @@ class Order extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'user_id' => Yii::t('app', 'User ID'),
-            'userName' => Yii::t('app', 'User'),
+//            'userName' => Yii::t('app', 'User'),
             'link' => Yii::t('app', 'Link'),
             'quantity' => Yii::t('app', 'Quantity'),
             'service_id' => Yii::t('app', 'Service ID'),
-            'serviceName' => Yii::t('app', 'Service'),
-            'statusName' => Yii::t('app', 'Status'),
+//            'serviceName' => Yii::t('app', 'Service'),
+            'status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created'),
-            'modeName' => Yii::t('app', 'Mode'),
+//            'modeName' => Yii::t('app', 'Mode'),
         ];
     }
 

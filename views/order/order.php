@@ -51,14 +51,15 @@ use yii\grid\GridView;
 </nav>
 <div class="container-fluid">
     <ul class="nav nav-tabs p-b">
-        <li class="<?= Yii::$app->getRequest()->getQueryParam('status') !== null ? '' : 'active' ?>"><a href="<?= Url::to('/orderlist') ?>">All orders</a></li>
+        <li class="<?= $status !== null ? '' : 'active' ?>"><a href="<?= Url::to('/orderlist/') ?>">All orders</a></li>
         <?php foreach (OrderStatus::NAMING as $key => $status_name): ?>
-            <li class="<?= Yii::$app->getRequest()->getQueryParam('status') === "$key" ? 'active' : '' ?>"><a href="<?= Url::to("/orderlist/?status=$key") ?>"><?= $status_name ?></a></li>
+            <li class="<?= $status === "$key" ? 'active' : '' ?>"><a href="<?= Url::to(['/orderlist/', 'status' => $key]) ?>"><?= $status_name ?></a></li>
         <?php endforeach; ?>
         <li class="pull-right custom-search">
-            <form class="form-inline" action="/orderlist" method="get">
+            <form class="form-inline" action='/orderlist/' method="get">
                 <div class="input-group">
                     <input type="text" name="search" class="form-control" value="" placeholder="Search orders">
+                    <?php if(isset($status)) echo "<input type='hidden' name='status' value=$status>"; ?>
                     <span class="input-group-btn search-select-wrap">
 
             <select class="form-control search-select" name="search-type">
@@ -86,7 +87,7 @@ use yii\grid\GridView;
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li class="active"><a href="">All (<?= $dataProvider->getTotalCount() ?>)</a></li>
+                        <li class="active"><a href="<?= Url::to(['/orderlist/', 'mode' => $mode, 'status' => $status]) ?>">All (<?= $dataProvider->getTotalCount() ?>)</a></li>
                         <li><a href=""><span class="label-id">214</span>  Real Views</a></li>
                         <li><a href=""><span class="label-id">215</span> Page Likes</a></li>
                         <li><a href=""><span class="label-id">10</span> Page Likes</a></li>
@@ -105,9 +106,25 @@ use yii\grid\GridView;
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li class="<?= Yii::$app->getRequest()->getQueryParam('mode') !== null ? '' : 'active' ?>"><a href="<?= Url::to(['/orderlist', 'mode' => null, 'status' => $status]) ?>">All</a></li>
+                        <li class="<?= $mode !== null ? '' : 'active' ?>">
+                            <a href="<?= Url::to(['/orderlist/',
+                                'mode' => null,
+                                'status' => $status,
+                                'search' => $search,
+                                'search-type' => $searchType
+                            ]) ?>">All</a>
+                        </li>
                         <?php foreach (Order::MOD_LIST as $key => $mod): ?>
-                            <li class="<?= Yii::$app->getRequest()->getQueryParam('mode') === "$key" ? 'active' : '' ?>"><a href="<?= Url::to(['/orderlist', 'mode' => $key, 'status' => $status]) ?>"><?= $mod ?></a></li>
+                            <li class="<?= $mode === $key ? 'active' : '' ?>">
+                                <a href="<?= Url::to(['/orderlist/',
+                                    'mode' => $key,
+                                    'status' => $status,
+                                    'search' => $search,
+                                    'search-type' => $searchType
+                                ]) ?>">
+                                    <?= $mod ?>
+                                </a>
+                            </li>
                         <?php endforeach; ?>
                     </ul>
                 </div>
@@ -154,7 +171,9 @@ use yii\grid\GridView;
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'layout' => '{summary}',
-                'summary' => "Showing {begin} - {end} of {totalCount} orders"
+                'summary' => $dataProvider->pagination->totalCount > $dataProvider->pagination->pageSize ?
+                    "Showing {begin} - {end} of {totalCount} orders" :
+                    "{totalCount} orders"
             ]); ?>
         </div>
     </div>
