@@ -62,7 +62,7 @@ use yii\grid\GridView;
                     <input type="text" name="search" class="form-control" value="" placeholder="Search orders">
                     <span class="input-group-btn search-select-wrap">
 
-            <select class="form-control search-select" name="search-type">
+            <select class="form-control search-select" name="searchType">
               <option value="1" selected="">Order ID</option>
               <option value="2">Link</option>
               <option value="3">Username</option>
@@ -87,7 +87,7 @@ use yii\grid\GridView;
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li class="active"><a href="<?= Url::to(['/orderlist/', 'mode' => $mode, 'status' => $status]) ?>">All (<?= $dataProvider->getTotalCount() ?>)</a></li>
+                        <li class="active"><a href="<?= Url::to(['/orderlist/', 'mode' => $mode, 'status' => $status, 'service_id' => null]) ?>">All (<?= $dataProvider->getTotalCount() ?>)</a></li>
                         <li><a href=""><span class="label-id">214</span>  Real Views</a></li>
                         <li><a href=""><span class="label-id">215</span> Page Likes</a></li>
                         <li><a href=""><span class="label-id">10</span> Page Likes</a></li>
@@ -111,7 +111,7 @@ use yii\grid\GridView;
                                 'mode' => null,
                                 'status' => $status,
                                 'search' => $search,
-                                'search-type' => $searchType
+                                'searchType' => $searchType
                             ]) ?>">All</a>
                         </li>
                         <?php foreach (Order::MOD_LIST as $key => $mod): ?>
@@ -120,7 +120,8 @@ use yii\grid\GridView;
                                     'mode' => $key,
                                     'status' => $status,
                                     'search' => $search,
-                                    'search-type' => $searchType
+                                    'searchType' => $searchType,
+                                    'service_id' => $service_id
                                 ]) ?>">
                                     <?= $mod ?>
                                 </a>

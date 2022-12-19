@@ -1,5 +1,4 @@
 <?php
-
 namespace vanitokurason\orderlist\models;
 
 use yii\base\Model;
@@ -29,10 +28,10 @@ class OrderSearch extends Order
         $query->andFilterWhere([
             'status' => $params['status'] ?? null,
             'mode' => $params['mode'] ?? null,
-            'service_id' => $params['service'] ?? null
+            'service_id' => $params['service_id'] ?? null
         ]);
 
-        if (isset($params['search']) && isset($params['search-type'])) {
+        if (isset($params['search']) && isset($params['searchType'])) {
             $query = $this->applySearchParams($query, $params);
         }
 
@@ -51,8 +50,6 @@ class OrderSearch extends Order
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
@@ -61,15 +58,15 @@ class OrderSearch extends Order
 
     protected function applySearchParams(ActiveQuery $query, $params): ActiveQuery
     {
-        if ($params['search-type'] == self::SEARCH_BY_ORDER_ID) {
+        if ($params['searchType'] == self::SEARCH_BY_ORDER_ID) {
             return $query->andFilterWhere(['orders.id' => $params['search']]);
         };
 
-        if ($params['search-type'] == self::SEARCH_BY_LINK) {
+        if ($params['searchType'] == self::SEARCH_BY_LINK) {
             return $query->andFilterWhere(['like', 'link', $params['search']]);
         };
 
-        if ($params['search-type'] == self::SEARCH_BY_USER_NAME) {
+        if ($params['searchType'] == self::SEARCH_BY_USER_NAME) {
 
             $name = explode(' ', $params['search']);
 

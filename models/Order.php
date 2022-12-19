@@ -1,12 +1,12 @@
 <?php
-
 namespace vanitokurason\orderlist\models;
 
 use Yii;
 use vanitokurason\orderlist\models\Service;
 use vanitokurason\orderlist\models\User;
+use yii\db\ActiveRecord;
 
-class Order extends \yii\db\ActiveRecord
+class Order extends ActiveRecord
 {
     private const MOD_MANUAL = 0;
     private const MOD_AUTO = 1;
