@@ -1,5 +1,4 @@
 <?php
-
 namespace vanitokurason\orderlist\controllers;
 
 use vanitokurason\orderlist\models\OrderSearch;
@@ -14,7 +13,8 @@ class OrderController extends Controller
         $status = $this->request->getQueryParam('status') ?? null;
         $mode = $this->request->getQueryParam('mode') ?? null;
         $search = $this->request->getQueryParam('search') ?? null;
-        $searchType = $this->request->getQueryParam('search-type') ?? null;
+        $searchType = (int) $this->request->getQueryParam('search-type') ?? null;
+        $service = $this->request->getQueryParams('service') ?? null;
 
         $searchModel = new OrderSearch();
         $dataProvider = $searchModel->search($this->request->getQueryParams());

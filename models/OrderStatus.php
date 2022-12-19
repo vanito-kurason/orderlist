@@ -32,9 +32,4 @@ final class OrderStatus
         self::CANCELED => 'Canceled',
         self::ERROR => 'Error'
     ];
-
-    public function isNew(): bool
-    {
-        return $this->status === self::NEW;
-    }
 }

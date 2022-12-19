@@ -51,15 +51,15 @@ use yii\grid\GridView;
 </nav>
 <div class="container-fluid">
     <ul class="nav nav-tabs p-b">
-        <li class="<?= $status !== null ? '' : 'active' ?>"><a href="<?= Url::to('/orderlist/') ?>">All orders</a></li>
+        <li class="<?= $status === null ? 'active' : '' ?>"><a href="<?= Url::to('/orderlist/') ?>">All orders</a></li>
         <?php foreach (OrderStatus::NAMING as $key => $status_name): ?>
             <li class="<?= $status === "$key" ? 'active' : '' ?>"><a href="<?= Url::to(['/orderlist/', 'status' => $key]) ?>"><?= $status_name ?></a></li>
         <?php endforeach; ?>
         <li class="pull-right custom-search">
             <form class="form-inline" action='/orderlist/' method="get">
                 <div class="input-group">
-                    <input type="text" name="search" class="form-control" value="" placeholder="Search orders">
                     <?php if(isset($status)) echo "<input type='hidden' name='status' value=$status>"; ?>
+                    <input type="text" name="search" class="form-control" value="" placeholder="Search orders">
                     <span class="input-group-btn search-select-wrap">
 
             <select class="form-control search-select" name="search-type">
@@ -106,7 +106,7 @@ use yii\grid\GridView;
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li class="<?= $mode !== null ? '' : 'active' ?>">
+                        <li class="<?= is_null($mode) ? 'active' : '' ?>">
                             <a href="<?= Url::to(['/orderlist/',
                                 'mode' => null,
                                 'status' => $status,
@@ -115,7 +115,7 @@ use yii\grid\GridView;
                             ]) ?>">All</a>
                         </li>
                         <?php foreach (Order::MOD_LIST as $key => $mod): ?>
-                            <li class="<?= $mode === $key ? 'active' : '' ?>">
+                            <li class="<?= $mode === "$key" ? 'active' : '' ?>">
                                 <a href="<?= Url::to(['/orderlist/',
                                     'mode' => $key,
                                     'status' => $status,
@@ -142,21 +142,15 @@ use yii\grid\GridView;
                 <td><?= $item->getServiceName() ?></td>
                 <td><?= OrderStatus::NAMING[$item['status']] ?></td>
                 <td><?= Order::MOD_LIST[$item['mode']] ?></td>
-                <td><?= date('Y-m-d H:i:s', $item['created_at']) ?></td>
+                <td>
+                    <span class="nowrap"><?= date('Y-m-d', $item['created_at']) ?></span>
+                    <span class="nowrap"><?= date('H-I-s', $item['created_at']) ?></span>
+                </td>
             </tr>
         <?php endforeach; ?>
-        <!--    <tr>-->
-        <!--      <td>558931</td>-->
-        <!--      <td>waliullah</td>-->
-        <!--      <td class="link">/p/BMRSv4FDevy/</td>-->
-        <!--      <td>3000</td>-->
         <!--      <td class="service">-->
         <!--        <span class="label-id">213</span>Likes-->
         <!--      </td>-->
-        <!--      <td>Pending</td>-->
-        <!--      <td>Manual</td>-->
-        <!--      <td><span class="nowrap">2016-01-27</span><span class="nowrap">15:13:52</span></td>-->
-        <!--    </tr>-->
         </tbody>
     </table>
     <div class="row">
